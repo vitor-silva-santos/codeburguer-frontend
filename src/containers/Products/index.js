@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
 
 import ProductsLogo from "../../assets/products-logo.svg";
@@ -12,11 +13,17 @@ import {
   ProductsContainer,
 } from "./styles";
 
-export function Products() {
+export function Products({ location: { state } }) {
+  let categoryId = 0;
+
+  if (state?.categoryId) {
+    categoryId = state.categoryId;
+  }
+
   const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
-  const [activeCategory, setActiveCategory] = useState(0);
+  const [activeCategory, setActiveCategory] = useState(categoryId);
 
   useEffect(() => {
     async function loadCategory() {
@@ -85,3 +92,7 @@ export function Products() {
     </Container>
   );
 }
+
+Products.propTypes = {
+  location: PropTypes.obkect,
+};

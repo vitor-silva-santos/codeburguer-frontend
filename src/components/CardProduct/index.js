@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
 import PropTypes from "prop-types";
 import React from "react";
+import { useHistory } from "react-router-dom";
 
 import { useCart } from "../../hooks/CartContext";
 import { Button } from "../Button";
@@ -8,13 +9,20 @@ import { Container, Image, ProductName, ProductPrice } from "./style";
 
 export function CardProduct({ product }) {
   const { putProductInCart } = useCart();
+  const { push } = useHistory();
   return (
     <Container>
       <Image src={product.url} alt="imagem do produto" />
       <div>
         <ProductName>{product.name}</ProductName>
         <ProductPrice>{product.formatedPrice}</ProductPrice>
-        <Button width="150px" onClick={() => putProductInCart(product)}>
+        <Button
+          width="150px"
+          onClick={() => {
+            putProductInCart(product);
+            push("/carrinho");
+          }}
+        >
           Adicionar
         </Button>
       </div>
